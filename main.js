@@ -94,10 +94,10 @@ function draw_square(canvas, x, y, w, h, color) {
 }
 
 function render(grid) {
-    const canvas = document.getElementById('terrain-container');
+    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+	console.log(canvas.width)
     const w = Math.floor(canvas.width / grid.n_cols);
     const h = Math.floor(canvas.height / grid.n_rows);
 
@@ -107,19 +107,33 @@ function render(grid) {
             const x = i_col * w;
             const y = i_row * h;
 
-            if (visited) draw_square(canvas, x, y, w, h, 'rgba(224, 49, 49, 0.2)');
+            // if (visited) draw_square(canvas, x, y, w, h, 'rgba(224, 49, 49, 0.2)');
 
             // Draw walls: North, East, South, West
-            if (walls[0]) draw_line(canvas, x, y, x+w, y, 1, '#3381C7');     // North
-            if (walls[1]) draw_line(canvas, x+w, y, x+w, y+h, 1, '#3381C7'); // East
-            if (walls[2]) draw_line(canvas, x, y+h, x+w, y+h, 1, '#3381C7'); // South
-            if (walls[3]) draw_line(canvas, x, y, x, y+h, 1, '#3381C7');     // West
+            if (walls[0]) draw_line(canvas, x, y, x+w, y, 1, '#000');     // North
+            if (walls[1]) draw_line(canvas, x+w, y, x+w, y+h, 1, '#000'); // East
+            if (walls[2]) draw_line(canvas, x, y+h, x+w, y+h, 1, '#000'); // South
+            if (walls[3]) draw_line(canvas, x, y, x, y+h, 1, '#000');     // West
         }
     }
 }
 
 /* program */
 window.onload = () => {
-    const grid = generate(100,100);
+    const grid = generate(50,50);
     render(grid);
 };
+window.onload = () => {
+    const grid = generate(50,50);
+    render(grid);
+};
+
+const reloadButton = document.getElementById('reload-button');
+reloadButton.onclick = () => {
+    const grid = generate(50,50);
+    render(grid);
+};
+
+
+
+
